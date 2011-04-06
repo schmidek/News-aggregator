@@ -21,6 +21,9 @@ function(head, req) {
 	   datediff /= 12;
 	   return f(datediff,"year");
 	};
+	var escapeHtml = function(s){
+		return s.split("&").join("&amp;").split( "<").join("&lt;").split(">").join("&gt;");
+	}
 	
 	var username = req.userCtx.name; 
    start({"headers": {"Content-Type" : "text/html"}});
@@ -36,7 +39,7 @@ function(head, req) {
    send("<div style='width:70%;float:left;'><h1 style='margin-left:10px;'><a href='/'>Main</a></h1></div>");
    send("<div style='width:30%;float:right;height:200px;'><span style='float:right;'>");
    if(username!=null){
-		send("<span id='username'>"+username+"</span>");
+		send("<span id='username'>"+escapeHtml(username)+"</span>");
 	}else{
 		send("<span id='username'></span>");
 	}
@@ -84,8 +87,8 @@ function(head, req) {
 		   send("</li>");
 	   }
 	   send("<li id='"+ row.comment._id +"'>");
-	   send("<div>"+ row.comment.author + " " + (row.ups-row.downs) + " points " + dateString(now,new Date(row.comment.created_at)) + " ago</div>");
-	   send("<p>"+ row.comment.text +"</p>");
+	   send("<div>"+ escapeHtml(row.comment.author) + " " + (row.ups-row.downs) + " points " + dateString(now,new Date(row.comment.created_at)) + " ago</div>");
+	   send("<p>"+ escapeHtml(row.comment.text) +"</p>");
 	   //send(JSON.stringify(row));
 	   
 	   prev = newpath;

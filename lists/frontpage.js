@@ -23,6 +23,9 @@ function(head, req) {
 	   datediff /= 12;
 	   return f(datediff,"year");
 	};
+	var escapeHtml = function(s){
+		return s.split("&").join("&amp;").split( "<").join("&lt;").split(">").join("&gt;");
+	}
 	
 	var page = parseInt(req.query.page) || 1;
 	if(page <= 0) page = 1;
@@ -62,7 +65,7 @@ function(head, req) {
    send("<div style='width:70%;float:left;'><h1 style='margin-left:10px;'><a href='/'>Main</a></h1></div>");
    send("<div style='width:30%;float:right;height:200px;'><span style='float:right;'>");
    if(username!=null){
-		send("<span id='username'>"+username+"</span>");
+		send("<span id='username'>"+escapeHtml(username)+"</span>");
 	}else{
 		send("<span id='username'></span>");
 	}
@@ -79,8 +82,8 @@ function(head, req) {
 	   var comments = row.value.comments;
 	   
 	   send("<li id='"+post._id+"'>");
-	   send("<div><a class='title' href='"+post.url+"'>"+post.title+"</a></div>");
-	   send("<div>submitted "+ dateString(now,rowdate) +" ago by "+post.author+"</div>");
+	   send("<div><a class='title' href='"+escapeHtml(post.url)+"'>"+escapeHtml(post.title)+"</a></div>");
+	   send("<div>submitted "+ dateString(now,rowdate) +" ago by "+escapeHtml(post.author)+"</div>");
 	   send("<div><a href='/comments/"+post._id+"'>"+ comments +" "+ (comments==1 ? "comment" : "comments") +"</a></div>");
 	   //send(JSON.stringify(row));
 	   send("</li>");
