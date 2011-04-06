@@ -1,5 +1,7 @@
 function(head, req) {
 	
+	start({"headers": {"Content-Type" : "text/html"}});
+	
 	var dateString = function(a,b){
 		
 		var f = function(num,unit){
@@ -22,8 +24,32 @@ function(head, req) {
 	   return f(datediff,"year");
 	};
 	
+	var page = parseInt(req.query.page) || 1;
+	if(page <= 0) page = 1;
+	
 	var username = req.userCtx.name; 
-   start({"headers": {"Content-Type" : "text/html"}});
+	var data = [];
+   var row;
+   var now = new Date();
+   while( row = getRow()){
+	   data.push(row);
+   }
+   data.sort(function(a,b){
+	  return a.value.rating - b.value.rating;
+   }).reverse();
+   
+   var pageSize = 20;
+   var hasPrev = page>1;
+   var hasNext = (page*pageSize) < data.length;
+   var viewmorehtml = "";
+   if(hasPrev || hasNext){
+	   viewmorehtml += "<div>view more: ";
+	   if(hasPrev) viewmorehtml += "<a href='?page=" + (page-1) + "'>prev</a>";
+	   if(hasPrev && hasNext) viewmorehtml += " | ";
+	   if(hasNext) viewmorehtml += "<a href='?page=" + (page+1) + "'>next</a>";
+	   viewmorehtml += "</div>";
+	}
+   
    send("<html><head><script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js'></script><script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js'></script>");
    send('<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/themes/dark-hive/jquery-ui.css" type="text/css" />');
    send('<link rel="stylesheet" type="text/css" href="/style/main.css" />');
@@ -41,17 +67,12 @@ function(head, req) {
 		send("<span id='username'></span>");
 	}
    send("<button id='signupButton' type='button'>Signup</button><button id='loginButton' type='button'>Login</button></span></div>");
+   send(viewmorehtml);
    send("<ul>");
-   var data = [];
-   var row;
-   var now = new Date();
-   while( row = getRow()){
-	   data.push(row);
-   }
-   data.sort(function(a,b){
-	  return a.value.rating - b.value.rating;
-   }).reverse();
-   for(i in data){
+   
+   var startIndex = (page-1) * pageSize;
+   var min = Math.min(startIndex+pageSize,data.length);
+   for(i = startIndex; i < min; i++){
 	   row = data[i];
 	   var post = row.value.post;
 	   var rowdate = new Date(post.created_at);
@@ -65,6 +86,7 @@ function(head, req) {
 	   send("</li>");
    }
    send("</ul>");
+   send(viewmorehtml);
    send('<h2>Submit link</h2><form id="postForm" action="post" method="post"><p><label>title</label><input type="text" name="title" /></p><p><label>url</label><input type="text" name="url" /></p><input type="submit" /></form>');
    send("</body></html>");
 }
