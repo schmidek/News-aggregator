@@ -1,0 +1,40 @@
+[
+	{
+		"from" : "",
+		"to" : "_list/frontpage/rank",
+		"query" : {"group":true}
+	},
+	{
+		"from" : "comments/:postid",
+		"to" : "_list/comments/best",
+		"query" : {"group":true, "startkey":[":postid"], "endkey":[":postid",{}], "inclusive_end":true}
+	},
+	{
+		"from" : "vote/:voteid",
+		"to" : "../../:voteid"
+	},
+	{
+		"from" : "comment/:id",
+		"to" : "../../:id"
+	},
+	{
+		"from" : "post/",
+		"to" : "../../"
+	},
+	{
+		"from" : "create_user/:userid",
+		"to" : "../../../_users/:userid"
+	},
+	{
+		"from" : "_session",
+		"to" : "../../../_session"
+	},
+	{
+		"from" : "_uuids",
+		"to" : "../../../_uuids"
+	},
+	{
+		"from" : "*",
+		"to" : "*"
+	}
+]

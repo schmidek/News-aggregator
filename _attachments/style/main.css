@@ -1,0 +1,15 @@
+ul {
+	list-style-type:none;
+}
+.ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 0.8em; }
+
+li {
+	margin: 2px;
+}
+
+a {
+	text-decoration: none;
+}
+.title {
+	font-size: 1.2em;
+}
