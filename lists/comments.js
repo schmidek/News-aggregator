@@ -95,6 +95,6 @@ function(head, req) {
 		send("</ul></li>");
 	}
    send("</ul>");
-   send('<h2>Post Comment</h2><form class="commentForm" action="post" method="post"><p><textarea name="text" ></textarea></p><input type="submit" /></form>');
+   send('<h2>Post Comment</h2><form class="commentForm" action="post" method="post"><p><textarea name="text" ></textarea></p><input type="submit" value="Submit" /></form>');
    send("</body></html>");
 }

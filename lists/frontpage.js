@@ -87,6 +87,6 @@ function(head, req) {
    }
    send("</ul>");
    send(viewmorehtml);
-   send('<h2>Submit link</h2><form id="postForm" action="post" method="post"><p><label>title</label><input type="text" name="title" /></p><p><label>url</label><input type="text" name="url" /></p><input type="submit" /></form>');
+   send('<h2>Submit link</h2><form id="postForm" action="post" method="post"><p><label>title</label><input type="text" name="title" /></p><p><label>url</label><input type="text" name="url" /></p><input type="submit" value="Submit" /></form>');
    send("</body></html>");
 }

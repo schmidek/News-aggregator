@@ -40,7 +40,7 @@ $(document).ready(function(){
 		var id = CouchDB.newUuids(1)[0];
 		data.type = "comment";
 		data.created_at = new Date().getTime();
-		data.author = name;
+		data.author = CouchDB.name;
 		data.post_id = CouchDB.postid;
 		data.path = getPath(this, [id]);
 		$.ajax({

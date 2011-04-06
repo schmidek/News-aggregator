@@ -10,7 +10,7 @@ $(document).ready(function(){
 	$(".downvote").click(function(){
 		CouchDB.vote($(this).closest("li").attr("id"), -1);
 	});
-	$("#postForm").submit(function(){
+	$("#postForm").submit(function(event){
 		event.preventDefault();
 		if(!CouchDB.ensureLogin()){
 			return false;

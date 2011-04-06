@@ -52,7 +52,7 @@ var CouchDBUtils = function(){
 		data.rating = rating;
 		$.ajax({
 			type: "PUT",
-			url: "/vote/"+id+name,
+			url: "/vote/"+id+self.name,
 			contentType: "application/json",
 			data: JSON.stringify(data),
 			success: function(msg){  }
@@ -68,7 +68,7 @@ var CouchDBUtils = function(){
 		data.rating = rating;
 		$.ajax({
 			type: "PUT",
-			url: "/vote/"+id+name,
+			url: "/vote/"+id+self.name,
 			contentType: "application/json",
 			data: JSON.stringify(data),
 			success: function(msg){  }
