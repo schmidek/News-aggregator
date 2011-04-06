@@ -1,8 +1,10 @@
 ## Info
 
-A reddit-like news aggregator.
+A reddit-like news aggregator served directly from CouchDB.
 
-Designed to be served directly from couchdb to allow for easy scalability.
+It has almost no features, looks like crap and probably has lots of bugs/security vulnerabilites but if you still want to see it in action [here's a link.](http://news.schmidek.ca)
+
+This is really just an excuse for me to experiment with and learn a bit about CouchDB and to see if CouchDB is even suited for a site like this.
 
 Currently uses the same ranking algorithm for both posts and comments and is similar to reddit's hot ranking. I plan on implementing similar to reddit's best algorithm for comments.
 [A good summary of how reddit's ranking works.](http://amix.dk/blog/post/19588)
