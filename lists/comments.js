@@ -47,12 +47,29 @@ function(head, req) {
    var ratings = new Object();
    var rows = [];
    var row;
+   var post;
    while( row = getRow()){
 		if(row.value.comment){
 			ratings[row.value.comment._id] = row.value.rating;
 			rows.push(row.value);
 		}
+		if(row.value.post){
+			post = row.value.post;
+		}
    }
+   
+   var op;
+   if(post){
+	   op = post.author;
+	   var now = new Date();
+	   var rowdate = new Date(post.created_at);
+	   	   
+	   send("<div>");
+	   send("<div><a class='title' href='"+escapeHtml(post.url)+"'>"+escapeHtml(post.title)+"</a></div>");
+	   send("<div>submitted "+ dateString(now,rowdate) +" ago by "+escapeHtml(post.author)+"</div>");
+	   send("</div><hr />");
+   }
+   
    var i;
    for(i in rows){
 	   row = rows[i];
@@ -86,8 +103,10 @@ function(head, req) {
 	   }else{
 		   send("</li>");
 	   }
+	   var points = row.ups-row.downs;
+	   var authorStr = "<span" + (row.comment.author == op ? " class='op'>" : ">") + escapeHtml(row.comment.author) + "</span>";
 	   send("<li id='"+ row.comment._id +"'>");
-	   send("<div>"+ escapeHtml(row.comment.author) + " " + (row.ups-row.downs) + " points " + dateString(now,new Date(row.comment.created_at)) + " ago</div>");
+	   send("<div>"+ authorStr + " " + points + (points==1 ? " point " : " points ") + dateString(now,new Date(row.comment.created_at)) + " ago</div>");
 	   send("<p>"+ escapeHtml(row.comment.text) +"</p>");
 	   //send(JSON.stringify(row));
 	   

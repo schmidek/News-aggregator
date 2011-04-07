@@ -1,11 +1,14 @@
 function(keys, values, rereduce) {
 	var i;
 	var l = values.length;
-	var ret = {comment:null, ups:0, downs:0};
+	var ret = {post:null, comment:null, ups:0, downs:0};
 	if(rereduce){
 		for(i = 0; i < l; ++i){
 			if(values[i].comment){
 				ret.comment = values[i].comment;
+			}
+			if(values[i].post){
+				ret.post = values[i].post;
 			}
 			ret.ups += values[i].ups;
 			ret.downs += values[i].downs;
@@ -13,6 +16,9 @@ function(keys, values, rereduce) {
 	}else{
 		for(i = 0; i < l; ++i){
 			switch(values[i][0]){
+				case "post":
+					ret.post = values[i][1];
+					break
 				case "comment": 
 					ret.comment = values[i][1]; 
 					break;
