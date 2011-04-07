@@ -80,11 +80,12 @@ function(head, req) {
 	   var post = row.value.post;
 	   var rowdate = new Date(post.created_at);
 	   var comments = row.value.comments;
-	   
+	   var points = row.value.ups - row.value.downs;
+	   	   
 	   send("<li id='"+post._id+"'>");
 	   send("<div><a class='title' href='"+escapeHtml(post.url)+"'>"+escapeHtml(post.title)+"</a></div>");
 	   send("<div>submitted "+ dateString(now,rowdate) +" ago by "+escapeHtml(post.author)+"</div>");
-	   send("<div><a href='/comments/"+post._id+"'>"+ comments +" "+ (comments==1 ? "comment" : "comments") +"</a></div>");
+	   send("<div><span>"+points+" points</span> <a href='/comments/"+post._id+"'>"+ comments +" "+ (comments==1 ? "comment" : "comments") +"</a></div>");
 	   //send(JSON.stringify(row));
 	   send("</li>");
    }
