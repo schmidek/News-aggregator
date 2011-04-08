@@ -6,7 +6,7 @@ It has almost no features, looks like crap and probably has lots of bugs/securit
 
 This is really just an excuse for me to experiment with and learn a bit about CouchDB and to see if CouchDB is even suited for a site like this.
 
-Currently uses the same ranking algorithm for both posts and comments and is similar to reddit's hot ranking. I plan on implementing similar to reddit's best algorithm for comments.
+Ranking algorithms used are similar to reddit's hot ranking for posts and best ranking for comments.
 [A good summary of how reddit's ranking works.](http://amix.dk/blog/post/19588)
 
 ## Deploying this app

@@ -34,11 +34,17 @@ function(keys, values, rereduce) {
 		}
 	}
 	if(ret.comment!=null){
-		var s = ret.ups - ret.downs;
-		var order = Math.log(Math.max(Math.abs(s),1)) / Math.log(10);
-		var sign = s > 0 ? 1 : (s<0 ? -1 : 0);
-		var seconds = ret.comment.created_at/1000 - 1134028003;
-		ret.rating = -1 * (Math.round((order + sign * seconds / 45000) * 10000000) / 10000000);
+		
+		var n = ret.ups + ret.downs;
+		if(n==0){
+			ret.rating = 0.5;
+		}else{
+			var z = 1.0;
+			var z2 = z*z;
+			var p = ret.ups / n;
+			ret.rating = Math.sqrt(p+z2/(2*n)-z*((p*(1-p)+z2/(4*n))/n))/(1+z2/n);
+		}
+		ret.rating = Math.round((1-ret.rating)*100000)/100000;
 	}
 	
 	return ret;
